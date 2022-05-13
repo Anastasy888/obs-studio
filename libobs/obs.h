@@ -434,6 +434,7 @@ EXPORT float obs_get_video_hdr_nominal_peak_level(void);
 
 /** Sets the video levels */
 EXPORT void obs_set_video_levels(float sdr_white_level,
+				 float sdr_preview_white_level,
 				 float hdr_nominal_peak_level);
 
 /** Gets the current audio settings, returns false if no audio */

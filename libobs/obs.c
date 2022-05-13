@@ -1475,18 +1475,26 @@ float obs_get_video_sdr_white_level(void)
 	return video->graphics ? video->sdr_white_level : 300.f;
 }
 
+float obs_get_video_preview_sdr_white_level(void)
+{
+	struct obs_core_video *video = &obs->video;
+	return video->graphics ? video->sdr_preview_white_level : 300.f;
+}
+
 float obs_get_video_hdr_nominal_peak_level(void)
 {
 	struct obs_core_video *video = &obs->video;
 	return video->graphics ? video->hdr_nominal_peak_level : 1000.f;
 }
 
-void obs_set_video_levels(float sdr_white_level, float hdr_nominal_peak_level)
+void obs_set_video_levels(float sdr_white_level, float sdr_preview_white_level,
+			  float hdr_nominal_peak_level)
 {
 	struct obs_core_video *video = &obs->video;
 	assert(video->graphics);
 
 	video->sdr_white_level = sdr_white_level;
+	video->sdr_preview_white_level = sdr_preview_white_level;
 	video->hdr_nominal_peak_level = hdr_nominal_peak_level;
 }
 
@@ -1994,7 +2002,7 @@ static void obs_render_main_texture_internal(enum gs_blend_type src_c,
 		break;
 	case GS_CS_709_SCRGB:
 		tech_name = "DrawMultiply";
-		multiplier = obs_get_video_sdr_white_level() / 80.f;
+		multiplier = obs_get_video_preview_sdr_white_level() / 80.f;
 	}
 
 	const bool previous = gs_framebuffer_srgb_enabled();

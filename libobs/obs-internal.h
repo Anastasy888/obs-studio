@@ -326,6 +326,7 @@ struct obs_core_video {
 
 	struct obs_video_info ovi;
 	float sdr_white_level;
+	float sdr_preview_white_level;
 	float hdr_nominal_peak_level;
 
 	pthread_mutex_t task_mutex;

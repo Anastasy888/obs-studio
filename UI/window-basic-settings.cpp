@@ -537,6 +537,7 @@ OBSBasicSettings::OBSBasicSettings(QWidget *parent)
 	HookWidget(ui->colorSpace,           COMBO_CHANGED,  ADV_CHANGED);
 	HookWidget(ui->colorRange,           COMBO_CHANGED,  ADV_CHANGED);
 	HookWidget(ui->sdrWhiteLevel,        SCROLL_CHANGED, ADV_CHANGED);
+	HookWidget(ui->previewSdrWhiteLevel, SCROLL_CHANGED, ADV_CHANGED);
 	HookWidget(ui->hdrNominalPeakLevel,  SCROLL_CHANGED, ADV_CHANGED);
 	HookWidget(ui->disableOSXVSync,      CHECK_CHANGED,  ADV_CHANGED);
 	HookWidget(ui->resetOSXVSync,        CHECK_CHANGED,  ADV_CHANGED);
@@ -2599,6 +2600,8 @@ void OBSBasicSettings::LoadAdvancedSettings()
 		config_get_string(main->Config(), "Video", "ColorRange");
 	uint32_t sdrWhiteLevel = (uint32_t)config_get_uint(
 		main->Config(), "Video", "SdrWhiteLevel");
+	uint32_t previewSdrWhiteLevel = (uint32_t)config_get_uint(
+		main->Config(), "Video", "PreviewSdrWhiteLevel");
 	uint32_t hdrNominalPeakLevel = (uint32_t)config_get_uint(
 		main->Config(), "Video", "HdrNominalPeakLevel");
 
@@ -2675,6 +2678,7 @@ void OBSBasicSettings::LoadAdvancedSettings()
 	SetComboByValue(ui->colorSpace, videoColorSpace);
 	SetComboByValue(ui->colorRange, videoColorRange);
 	ui->sdrWhiteLevel->setValue(sdrWhiteLevel);
+	ui->previewSdrWhiteLevel->setValue(previewSdrWhiteLevel);
 	ui->hdrNominalPeakLevel->setValue(hdrNominalPeakLevel);
 
 	if (!SetComboByValue(ui->bindToIP, bindIP))
@@ -3382,6 +3386,7 @@ void OBSBasicSettings::SaveAdvancedSettings()
 	SaveComboData(ui->colorSpace, "Video", "ColorSpace");
 	SaveComboData(ui->colorRange, "Video", "ColorRange");
 	SaveSpinBox(ui->sdrWhiteLevel, "Video", "SdrWhiteLevel");
+	SaveSpinBox(ui->previewSdrWhiteLevel, "Video", "PreviewSdrWhiteLevel");
 	SaveSpinBox(ui->hdrNominalPeakLevel, "Video", "HdrNominalPeakLevel");
 	if (obs_audio_monitoring_available()) {
 		SaveCombo(ui->monitoringDevice, "Audio",
